@@ -45,8 +45,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/teamcool/kino-backend:latest
-            ghcr.io/teamcool/kino-backend:${{ github.sha }}
+            ghcr.io/teamcoolek/kino-backend:latest
+            ghcr.io/teamcoolek/kino-backend:${{ github.sha }}
 
   deploy:
     needs: build-and-push-backend
@@ -62,7 +62,9 @@ jobs:
           # køre script når actions har SSH'et ind i VM
           script: |
             # compose.prod.yml befinder sig i ~/ roden, derfor ingen cd
-          
+            # stopper script hvis noget fejler
+            set -e
+            
             docker compose -f docker-compose.prod.yml pull
             
             docker compose -f docker-compose.prod.yml up -d
