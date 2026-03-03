@@ -61,8 +61,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           # køre script når actions har SSH'et ind i VM
           script: |
-            # clone kino-backend repo til VM dir kino-backend
-            cd ~/kino-backend
+            # compose.prod.yml befinder sig i ~/ roden, derfor ingen cd
           
             docker compose -f docker-compose.prod.yml pull
             
