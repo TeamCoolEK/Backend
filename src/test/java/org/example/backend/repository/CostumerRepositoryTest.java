@@ -1,4 +1,4 @@
 package org.example.backend.repository;
 
-public class CostumerRepositoryTest {
+public interface CostumerRepositoryTest {
 }
