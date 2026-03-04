@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: ${PROD_DATABASE_URL}
+    username: ${PROD_USERNAME}
+    password: ${PROD_PASSWORD}
+
+server:
+  port: ${PORT:8080}

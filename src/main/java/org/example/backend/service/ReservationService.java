@@ -16,7 +16,7 @@ public class ReservationService {
     private final SeatRepositoy SeatRepositoy;
     private final ShowingRepository showingRepository;
 
-    public ReservationService(SeatReservationRepository seatReservationRepository, ReservationRepository reservationRepository, CostumerRepository costumerRepository, ShowingRepository showingRepository, SeatRepositoy seatRepositoy, ShowingRepository showingRepository) {
+    public ReservationService(SeatReservationRepository seatReservationRepository, ReservationRepository reservationRepository, CostumerRepository costumerRepository, ShowingRepository showingRepository, SeatRepositoy seatRepositoy) {
         SeatReservationRepository = seatReservationRepository;
         ReservationRepository = reservationRepository;
         CostumerRepository = costumerRepository;
