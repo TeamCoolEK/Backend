@@ -5,18 +5,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalTime;
+
 @Data
 @Entity
-public class Movie {
+public class Customer {
 
     @Id
     @GeneratedValue
     private int id;
 
-    private String titel;
-    private int ageLimit;
-    private Boolean isActive;
-    private int duration;
-    private int category;
-    private boolean isUnderperforming;
+    private String name;
+    private byte age;
+    private String phoneNr;
 }

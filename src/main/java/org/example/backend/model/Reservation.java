@@ -1,13 +1,22 @@
 package org.example.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
+@Entity
 public class Reservation {
-    private int ID;
-    private LocalTime CreatedAt;
-    private LocalTime ExpiresAt;
-    private int Price;
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime expiresAt;
+    private int price;
 }

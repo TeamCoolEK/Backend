@@ -1,10 +1,18 @@
 package org.example.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
+@Entity
 public class Theatre {
-    private int ID;
-    private String Name;
-    private int Capasity;
+
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String name;
+    private int capasity;
 }
