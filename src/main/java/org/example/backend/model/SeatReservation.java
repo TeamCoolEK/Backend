@@ -1,9 +1,16 @@
 package org.example.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
+@Entity
 public class SeatReservation {
-    private int ReservationID;
-    private int SeatID;
+
+    @Id
+    @GeneratedValue
+    private int reservationID;
+    private int seatID;
 }

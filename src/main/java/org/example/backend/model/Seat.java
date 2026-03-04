@@ -1,11 +1,19 @@
 package org.example.backend.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
+@Entity
 public class Seat {
-    private int ID;
-    private int RowNo;
-    private int SeatNo;
-    private int Status;
+
+    @Id
+    @GeneratedValue
+    private int Id;
+
+    private int rowNo;
+    private int seatNo;
+    private int status;
 }
