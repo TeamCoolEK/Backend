@@ -1,5 +1,8 @@
 spring:
   application:
-    name: coolplanner
+    name: teamcoolkino
   profiles:
-    active: prod
+    active: dev
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
