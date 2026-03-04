@@ -21,6 +21,9 @@ class ShowingRepositoryTest {
         Showing s1 = new Showing();
         Showing s2 = new Showing();
 
+        s1.setId(1);
+        s2.setId(2);
+
         showingRepository.save(s1);
         showingRepository.save(s2);
 
