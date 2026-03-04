@@ -1,8 +1,6 @@
 package org.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -10,7 +8,13 @@ import lombok.Data;
 public class SeatReservation {
 
     @Id
-    @GeneratedValue
-    private int reservationID;
-    private int seatID;
+    private int seatReservationID;
+
+    @ManyToOne
+    @JoinColumn(name = "seatID", referencedColumnName = "id")
+    private Seat seat;
+
+    @ManyToOne
+    @JoinColumn(name = "reservationdID", referencedColumnName = "id")
+    private Reservation reservation;
 }
