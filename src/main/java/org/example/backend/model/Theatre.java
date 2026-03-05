@@ -17,7 +17,7 @@ public class Theatre {
     private int id;
 
     private String name;
-    private int capasity;
+    private int capacity;
 
     @OneToMany(mappedBy = "theatre")
     @JsonBackReference
