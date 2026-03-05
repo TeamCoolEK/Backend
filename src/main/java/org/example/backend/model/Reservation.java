@@ -12,6 +12,7 @@ import java.util.List;
 public class Reservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private LocalDateTime createdAt;

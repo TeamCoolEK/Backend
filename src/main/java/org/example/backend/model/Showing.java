@@ -11,6 +11,7 @@ import java.util.List;
 public class Showing {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private LocalTime startTime;

@@ -28,4 +28,14 @@ public class ReservationService {
     public List<Showing> findAllShowings () {
         return showingRepository.findAll();
     }
+
+    public Showing addShowing (Showing showing) {
+        List<Showing> showings = showingRepository.findAll();
+        for (Showing s : showings) {
+            if (s.getId() == showing.getId()) {
+                throw new RuntimeException("Showing already exist!");
+            }
+        }
+        return showingRepository.save(showing);
+    }
 }

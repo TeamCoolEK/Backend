@@ -18,7 +18,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
-#Cacher maven dependencies, så de ikke skal downloade ved hver test run
+      #Cacher maven dependencies, så de ikke skal downloade ved hver test run
       - name: Cache Maven dependencies
         uses: actions/cache@v4
         with:
