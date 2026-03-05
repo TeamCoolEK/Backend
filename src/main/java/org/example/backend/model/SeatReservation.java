@@ -8,6 +8,7 @@ import lombok.Data;
 public class SeatReservation {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int seatReservationID;
 
     @ManyToOne

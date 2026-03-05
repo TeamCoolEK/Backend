@@ -4,12 +4,17 @@ import org.example.backend.model.Showing;
 import org.example.backend.service.MovieService;
 import org.example.backend.service.ReservationService;
 import org.example.backend.service.TheatreService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+//@RestController retunerer Json (ResponseBody), hvor Controller retunerer HTML view (som 2 semester / WishList)
+//Vi bygger en API, så derfor RestController
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
 
     private final TheatreService theatreService;
@@ -22,8 +27,15 @@ public class AdminController {
         this.reservationService = reservationService;
     }
 
-    @GetMapping
-    public List<Showing> getAllShowings () {
-        return reservationService.findAllShowings();
+    @GetMapping("/showallshowings")
+    public ResponseEntity<List<Showing>> getAllShowings () {
+        List<Showing> showings = reservationService.findAllShowings();
+        return ResponseEntity.ok(showings);
+    }
+
+    @PostMapping("/addshowing")
+    public ResponseEntity<Showing> addShowing (@RequestBody Showing showing) {
+        Showing savedShowing = reservationService.addShowing(showing);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedShowing);
     }
 }
