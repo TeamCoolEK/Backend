@@ -11,7 +11,7 @@ import java.util.List;
 public class Seat {
 
     @Id
-    private int Id;
+    private int id;
 
     private int rowNo;
     private int seatNo;

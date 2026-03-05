@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class Showing {
     @Id
     private int id;
 
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalTime endTime; // = start + movieDuration
     private int status;
 
     @OneToMany(mappedBy = "showing")

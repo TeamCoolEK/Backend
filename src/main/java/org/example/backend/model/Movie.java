@@ -16,7 +16,7 @@ public class Movie {
     private String titel;
     private int ageLimit;
     private Boolean isActive;
-    private int duration;
+    private int duration; // minutter
     private boolean isUnderperforming;
 
 
