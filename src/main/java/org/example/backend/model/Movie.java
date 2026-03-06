@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+
 import java.util.List;
 
 @Getter
@@ -17,11 +18,13 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String titel;
+    private String title;
     private int ageLimit;
     private Boolean isActive;
     private int duration; // minutter
     private boolean isUnderperforming;
+
+
 
 
     @OneToMany(mappedBy = "movie")

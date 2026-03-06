@@ -5,16 +5,15 @@ import org.example.backend.model.Showing;
 import org.example.backend.service.ReservationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
+
 public class ReservationController {
 
     private final ReservationService reservationService;

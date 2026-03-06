@@ -109,7 +109,7 @@ public class BackendApplication {
             // MOVIE
             // =======================
             Movie movie = new Movie();
-            movie.setTitel("Interstellar");
+            movie.setTitle("Interstellar");
             movie.setAgeLimit(11);
             movie.setIsActive(true);
             movie.setDuration(169);
