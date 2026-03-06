@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface ShowingRepository extends JpaRepository<Showing, Integer> {
 
-    List<Showing> findByDate(LocalDateTime startTime);
+    List<Showing> findByStartTime(LocalDateTime startTime);
 }

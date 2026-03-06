@@ -2,8 +2,11 @@ package org.example.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class SeatReservation {
 
@@ -12,10 +15,10 @@ public class SeatReservation {
     private int seatReservationID;
 
     @ManyToOne
-    @JoinColumn(name = "seatID", referencedColumnName = "id")
+    @JoinColumn(name = "seatid", referencedColumnName = "id")
     private Seat seat;
 
     @ManyToOne
-    @JoinColumn(name = "reservationdID", referencedColumnName = "id")
+    @JoinColumn(name = "reservationdid", referencedColumnName = "id")
     private Reservation reservation;
 }

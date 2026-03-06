@@ -5,4 +5,4 @@ spring:
     active: dev
   jpa:
     hibernate:
-      ddl-asdasdauto: create-drop
+      ddl-auto: create-drop

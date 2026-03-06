@@ -79,6 +79,6 @@ public class ReservationService {
     }
 
     public List<Showing> getShowsByDate (LocalDateTime date) {
-        return showingRepository.findByDate(date);
+        return showingRepository.findByStartTime(date);
     }
 }
