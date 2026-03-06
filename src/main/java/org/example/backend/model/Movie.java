@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.List;
 
 @Data
@@ -14,11 +15,13 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String titel;
+    private String title;
     private int ageLimit;
     private Boolean isActive;
     private int duration; // minutter
     private boolean isUnderperforming;
+
+
 
 
     @OneToMany(mappedBy = "movie")

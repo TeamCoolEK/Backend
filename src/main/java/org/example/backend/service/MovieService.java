@@ -1,8 +1,10 @@
 package org.example.backend.service;
 
+import org.example.backend.model.Movie;
 import org.example.backend.repository.CategoryRepository;
 import org.example.backend.repository.MovieRepository;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class MovieService {
@@ -15,5 +17,9 @@ public class MovieService {
         this.CategoryRepository = CategoryRepository;
     }
 
+
+//    public Movie createMovie(Movie movie) {
+//        return MovieRepository.save(movie);
+//    }
 
 }
