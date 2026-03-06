@@ -3,10 +3,13 @@ package org.example.backend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Seat {
 
@@ -23,7 +26,7 @@ public class Seat {
     private List<SeatReservation> seatReservations;
 
     @ManyToOne
-    @JoinColumn(name = "theatreID", referencedColumnName = "id")
+    @JoinColumn(name = "theatreid", referencedColumnName = "id")
     private Theatre theatre;
 
 }

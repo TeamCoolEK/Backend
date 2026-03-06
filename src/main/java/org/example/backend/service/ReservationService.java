@@ -5,6 +5,8 @@ import org.example.backend.model.Showing;
 import org.example.backend.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,5 +76,9 @@ public class ReservationService {
             }
         }
         return showingRepository.save(showing);
+    }
+
+    public List<Showing> getShowsByDate (LocalDateTime date) {
+        return showingRepository.findByStartTime(date);
     }
 }

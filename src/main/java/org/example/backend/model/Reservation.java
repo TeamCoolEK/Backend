@@ -3,11 +3,14 @@ package org.example.backend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Reservation {
 
@@ -24,10 +27,10 @@ public class Reservation {
     private List<SeatReservation> seatReservations;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "id")
+    @JoinColumn(name = "customerid", referencedColumnName = "id")
     private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "showingId", referencedColumnName = "id")
+    @JoinColumn(name = "showingid", referencedColumnName = "id")
     private Showing showing;
 }
