@@ -3,6 +3,7 @@ package org.example.backend.controller;
 import org.example.backend.model.Seat;
 import org.example.backend.model.Showing;
 import org.example.backend.service.ReservationService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,10 @@ public class ReservationController {
         return reservationService.findAvailableSeatsForShowing(showingId);
     }
     //Henter showings for specifik dato til index
-    @GetMapping("/showbydate")
-    public ResponseEntity<List<Showing>> getShowingsByDate (@RequestParam String startDate) {
-        LocalDateTime localDateTime = LocalDateTime.parse(startDate);
-        List<Showing> showingsByDate = reservationService.getShowsByDate(localDateTime);
+    @GetMapping("/showByDate")
+    public ResponseEntity<List<Showing>> getShowingsByDate (@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        List<Showing> showingsByDate = reservationService.getShowsByDate(localDate);
         return ResponseEntity.ok(showingsByDate);
     }
 }
