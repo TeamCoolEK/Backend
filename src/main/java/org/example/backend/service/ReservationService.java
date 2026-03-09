@@ -74,8 +74,11 @@ public class ReservationService {
         return showingRepository.save(showing);
     }
 
-    public List<Showing> getShowsByDate (LocalDateTime date) {
-        return showingRepository.findByStartTime(date);
+    public List<Showing> getShowsByDate (LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+
+        return showingRepository.findByStartTimeBetween(startOfDay, endOfDay);
     }
 
     public String createReservation(int showingId, String phoneNr, List<Integer> seatIds){
