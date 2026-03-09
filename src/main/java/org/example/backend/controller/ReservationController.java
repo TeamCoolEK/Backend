@@ -33,4 +33,9 @@ public class ReservationController {
         List<Showing> showingsByDate = reservationService.getShowsByDate(localDateTime);
         return ResponseEntity.ok(showingsByDate);
     }
+
+    @PostMapping("/reservations")
+    public String createReservation(@RequestParam int showingId, @RequestParam String phoneNr, @RequestParam List<Integer> seatIds){
+        return reservationService.createReservation(showingId, phoneNr, seatIds);
+    }
 }
