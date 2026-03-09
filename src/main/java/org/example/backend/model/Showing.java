@@ -1,5 +1,6 @@
 package org.example.backend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Showing {
     private int status;
 
     @OneToMany(mappedBy = "showing")
-    @JsonBackReference
+   @JsonIgnore
     private List<Reservation> reservations;
 
     @ManyToOne
