@@ -3,13 +3,10 @@ package org.example.backend.controller;
 import org.example.backend.model.Seat;
 import org.example.backend.model.Showing;
 import org.example.backend.service.ReservationService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -38,5 +35,10 @@ public class ReservationController {
     @PostMapping("/reservations")
     public String createReservation(@RequestParam int showingId, @RequestParam String phoneNr, @RequestParam List<Integer> seatIds){
         return reservationService.createReservation(showingId, phoneNr, seatIds);
+    }
+
+    @GetMapping("/showings/{id}")
+    public Showing getShowingById(@PathVariable int id) {
+        return reservationService.findShowingById(id);
     }
 }

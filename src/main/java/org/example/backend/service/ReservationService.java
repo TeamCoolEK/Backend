@@ -129,4 +129,7 @@ public class ReservationService {
         return "Thanks for you reservation.";
     }
 
+    public Showing findShowingById(int showingId) {
+        return showingRepository.findById(showingId).orElse(null);
+    }
 }
