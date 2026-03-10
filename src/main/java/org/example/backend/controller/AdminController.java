@@ -14,7 +14,7 @@ import java.util.List;
 //@RestController retunerer Json (ResponseBody), hvor Controller retunerer HTML view (som 2 semester / WishList)
 //Vi bygger en API, så derfor RestController
 @RestController
-@RequestMapping("/admin")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private final TheatreService theatreService;
