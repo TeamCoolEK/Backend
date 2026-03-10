@@ -27,21 +27,17 @@ public class MovieController {
 
     @GetMapping("/allmovies")
     public List<Movie> getAllMovies() {
-        return MovieRepository.findAll();
+        return MovieService.getAllMovies();
     }
 
-//    @PostMapping("/createmovie")
-//    public Movie createMovie(@RequestBody Movie movie) {
-//        return MovieRepository.save(movie);
-//    }
-//}
-
-    @PostMapping("/createmovie")
+    @PostMapping("createmovie")
     public Movie createMovie(@RequestBody Movie movie) {
-        Category category = CategoryRepository.findById(movie.getCategory().getId())
-                .orElseThrow(() -> new RuntimeException("Category ikke fundet"));
-        movie.setCategory(category);
-        return MovieRepository.save(movie);
+        return MovieService.createMovie(movie);
+    }
+
+    @DeleteMapping("/deletemovie/{id}")
+    public void deleteMovie(@PathVariable int id) {
+        MovieService.deleteMovie(id);
     }
 }
 
