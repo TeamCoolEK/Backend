@@ -99,11 +99,35 @@ public class BackendApplication {
             // =======================
             // CATEGORY
             // =======================
-            Category category = new Category();
-            category.setName("Science Fiction");
+            if (categoryRepository.count() == 0) {
+                Category scienceFiction = new Category();
+                scienceFiction.setName("Science Fiction");
+                categoryRepository.save(scienceFiction);
 
-            categoryRepository.save(category);
+                Category action = new Category();
+                action.setName("Action");
+                categoryRepository.save(action);
 
+                Category drama = new Category();
+                drama.setName("Drama");
+                categoryRepository.save(drama);
+
+                Category komedie = new Category();
+                komedie.setName("Komedie");
+                categoryRepository.save(komedie);
+
+                Category thriller = new Category();
+                thriller.setName("Thriller");
+                categoryRepository.save(thriller);
+
+                Category animation = new Category();
+                animation.setName("Animation");
+                categoryRepository.save(animation);
+
+                Category horror = new Category();
+                horror.setName("Horror");
+                categoryRepository.save(horror);
+            }
 
             // =======================
             // MOVIE
@@ -114,7 +138,7 @@ public class BackendApplication {
             movie.setIsActive(true);
             movie.setDuration(169);
             movie.setUnderperforming(false);
-            movie.setCategory(category);
+            movie.setCategory(categoryRepository.findById(1).get());
 
             movieRepository.save(movie);
 
