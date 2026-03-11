@@ -1,5 +1,6 @@
 package org.example.backend.controller;
 
+import org.example.backend.model.Movie;
 import org.example.backend.model.Showing;
 import org.example.backend.service.MovieService;
 import org.example.backend.service.ReservationService;
@@ -32,6 +33,12 @@ public class AdminController {
         return ResponseEntity.ok(showings);
     }
 
+    @GetMapping("/movies")
+    public ResponseEntity<List<Movie>> getAllMoviesForAdmin() {
+        movieService.updateUnderperformingStatus();
+        return ResponseEntity.ok(movieService.getAllMovies());
+    }
+
     @PostMapping("/addshowing")
     public ResponseEntity<Showing> addShowing (@RequestBody Showing showing) {
         boolean overlap = reservationService.hasOverlap(showing);
@@ -44,6 +51,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedShowing);
     }
 
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
+        movieService.deleteMovie(id);
+        return ResponseEntity.noContent().build();
+    }
+  
     @DeleteMapping("/deleteshowing/{id}")
     public void deleteShowing (@PathVariable int id) {
         reservationService.deleteShowing(id);

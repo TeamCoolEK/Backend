@@ -23,9 +23,8 @@ public class Movie {
     private int ageLimit;
     private Boolean isActive;
     private int duration; // minutter
-    private boolean isUnderperforming;
 
-
+    private boolean underperforming;
 
 
     @OneToMany(mappedBy = "movie")
