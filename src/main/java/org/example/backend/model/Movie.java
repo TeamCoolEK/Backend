@@ -1,22 +1,38 @@
 package org.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class Movie {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String titel;
+    private String title;
     private int ageLimit;
     private Boolean isActive;
-    private int duration;
-    private int category;
-    private boolean isUnderperforming;
+    private int duration; // minutter
+
+    private boolean underperforming;
+
+
+    @OneToMany(mappedBy = "movie")
+    @JsonIgnore
+    private List<Showing> showings;
+
+
+    @ManyToOne
+    @JoinColumn(name = "categoryid", referencedColumnName = "id")
+    private Category category;
 }

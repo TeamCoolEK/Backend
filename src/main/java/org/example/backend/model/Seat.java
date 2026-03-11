@@ -1,19 +1,32 @@
 package org.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class Seat {
 
     @Id
-    @GeneratedValue
-    private int Id;
+    private int id;
 
     private int rowNo;
     private int seatNo;
     private int status;
+
+
+    @OneToMany(mappedBy = "seat")
+    @JsonBackReference
+    private List<SeatReservation> seatReservations;
+
+    @ManyToOne
+    @JoinColumn(name = "theatreid", referencedColumnName = "id")
+    private Theatre theatre;
+
 }

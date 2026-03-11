@@ -1,20 +1,37 @@
 package org.example.backend.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Showing {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime; // = start + movieDuration
     private int status;
+
+    @OneToMany(mappedBy = "showing")
+    @JsonIgnore
+    private List<Reservation> reservations;
+
+    @ManyToOne
+    @JoinColumn(name = "movieid", referencedColumnName = "id")
+    private Movie movie;
+
+    @ManyToOne
+    @JoinColumn(name = "theatreid", referencedColumnName = "id")
+    private Theatre theatre;
 }

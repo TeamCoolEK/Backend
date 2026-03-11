@@ -1,21 +1,27 @@
 package org.example.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalTime;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
     private byte age;
     private String phoneNr;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonBackReference
+    private List<Reservation> reservations;
 }
