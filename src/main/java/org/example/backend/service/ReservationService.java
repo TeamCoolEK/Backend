@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,28 @@ public class ReservationService {
                 throw new RuntimeException("Showing already exist!");
             }
         }
+        if (showing.getEndTime().toLocalTime().isAfter(LocalTime.of(23,59))) {
+            throw new IllegalArgumentException("Showing cannot end after 23:59");
+        }
         return showingRepository.save(showing);
+    }
+
+    public void deleteShowing (int id) {
+        showingRepository.deleteById(id);
+    }
+
+    public boolean hasOverlap(Showing showing) {
+        List<Showing> showings = showingRepository.findAll();
+
+        //Hvis showing starttid og slutid ikke er indenfor en showing i listen, retuneres true, ellers false
+        for (Showing s : showings) {
+
+
+            if (!showing.getStartTime().isBefore(s.getEndTime()) && !showing.getEndTime().isAfter(s.getStartTime())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Showing> getShowsByDate (LocalDate date) {

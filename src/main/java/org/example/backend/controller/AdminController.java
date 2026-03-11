@@ -35,7 +35,18 @@ public class AdminController {
 
     @PostMapping("/addshowing")
     public ResponseEntity<Showing> addShowing (@RequestBody Showing showing) {
+        boolean overlap = reservationService.hasOverlap(showing);
+
+        if (overlap) {
+            throw new RuntimeException("Fejl");
+        }
+
         Showing savedShowing = reservationService.addShowing(showing);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedShowing);
+    }
+
+    @DeleteMapping("/deleteshowing/{id}")
+    public void deleteShowing (@PathVariable int id) {
+        reservationService.deleteShowing(id);
     }
 }
