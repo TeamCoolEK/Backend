@@ -20,11 +20,11 @@ public class Showing {
     private int id;
 
     private LocalDateTime startTime;
-    private LocalTime endTime; // = start + movieDuration
+    private LocalDateTime endTime; // = start + movieDuration
     private int status;
 
     @OneToMany(mappedBy = "showing")
-   @JsonIgnore
+    @JsonIgnore
     private List<Reservation> reservations;
 
     @ManyToOne

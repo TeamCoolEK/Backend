@@ -150,7 +150,7 @@ public class BackendApplication {
             Showing showing = new Showing();
 
             showing.setStartTime(LocalDateTime.of(2026,3,6,18,0));
-            showing.setEndTime(LocalTime.of(20,49));
+            showing.setEndTime(LocalDateTime.of(2026, 3, 6,  20,49));
 
             showing.setStatus(0);
             showing.setMovie(movie);
