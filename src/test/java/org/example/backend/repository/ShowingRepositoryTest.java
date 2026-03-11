@@ -1,6 +1,7 @@
 package org.example.backend.repository;
 
 import org.example.backend.model.Showing;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -29,6 +30,6 @@ class ShowingRepositoryTest {
         List<Showing> result = showingRepository.findAll();
 
         //Assert
-        assertEquals(2, result.size());
+        assertEquals(3, result.size());
     }
 }
