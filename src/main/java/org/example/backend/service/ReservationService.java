@@ -92,9 +92,12 @@ public class ReservationService {
         //Hvis showing starttid og slutid ikke er indenfor en showing i listen, retuneres true, ellers false
         for (Showing s : showings) {
 
+            if (s.getTheatre().getId() == showing.getTheatre().getId()) {
 
-            if (!showing.getStartTime().isBefore(s.getEndTime()) && !showing.getEndTime().isAfter(s.getStartTime())) {
-                return true;
+                if (showing.getStartTime().isBefore(s.getEndTime()) && showing.getEndTime().isAfter(s.getStartTime())) {
+                    return true;
+                }
+
             }
         }
         return false;
