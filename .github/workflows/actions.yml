@@ -73,8 +73,10 @@ jobs:
             # stopper script hvis noget fejler
             set -e
             
+            export SPRING_DATASOURCE_URL=${{ secrets.PROD_DATABASE_URL }}
+            export SPRING_DATASOURCE_USERNAME=${{ secrets.PROD_USERNAME }}
+            export SPRING_DATASOURCE_PASSWORD=${{ secrets.PROD_PASSWORD }}
+
             docker compose -f docker-compose.prod.yml pull
-            
             docker compose -f docker-compose.prod.yml up -d
-            
             docker image prune -f
