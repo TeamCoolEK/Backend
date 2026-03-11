@@ -30,6 +30,10 @@ public class ReservationService {
         this.reservationRepository = reservationRepository;
     }
 
+    public int countSoldSeatsForShowing(int showingId) {
+        return SeatReservationRepository.findReservedSeatIdsByShowingId(showingId).size();
+    }
+
     public List<Showing> findAllShowings() {
         return showingRepository.findAll();
     }

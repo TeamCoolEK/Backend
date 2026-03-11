@@ -1,5 +1,6 @@
 package org.example.backend.controller;
 
+import org.example.backend.model.Movie;
 import org.example.backend.model.Showing;
 import org.example.backend.service.MovieService;
 import org.example.backend.service.ReservationService;
@@ -15,6 +16,7 @@ import java.util.List;
 //Vi bygger en API, så derfor RestController
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin(origins = "*")
 public class AdminController {
 
     private final TheatreService theatreService;
@@ -33,9 +35,21 @@ public class AdminController {
         return ResponseEntity.ok(showings);
     }
 
+    @GetMapping("/movies")
+    public ResponseEntity<List<Movie>> getAllMoviesForAdmin() {
+        movieService.updateUnderperformingStatus();
+        return ResponseEntity.ok(movieService.getAllMovies());
+    }
+
     @PostMapping("/addshowing")
     public ResponseEntity<Showing> addShowing (@RequestBody Showing showing) {
         Showing savedShowing = reservationService.addShowing(showing);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedShowing);
+    }
+
+    @DeleteMapping("/movie/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
+        movieService.deleteMovie(id);
+        return ResponseEntity.noContent().build();
     }
 }
