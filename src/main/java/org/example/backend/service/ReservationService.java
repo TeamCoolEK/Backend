@@ -107,7 +107,13 @@ public class ReservationService {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
 
-        return showingRepository.findByStartTimeBetween(startOfDay, endOfDay);
+        List<Showing> showings =
+                showingRepository.findByStartTimeBetween(startOfDay, endOfDay);
+
+        showings.sort((a, b) -> a.getStartTime().compareTo(b.getStartTime()));
+
+        return showings;
+
     }
 
     public String createReservation(int showingId, String phoneNr, List<Integer> seatIds){
@@ -160,5 +166,9 @@ public class ReservationService {
 
     public Showing findShowingById(int showingId) {
         return showingRepository.findById(showingId).orElse(null);
+    }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
     }
 }

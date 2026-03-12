@@ -1,6 +1,7 @@
 package org.example.backend.controller;
 
 import org.example.backend.model.Movie;
+import org.example.backend.model.Reservation;
 import org.example.backend.model.Showing;
 import org.example.backend.service.MovieService;
 import org.example.backend.service.ReservationService;
@@ -60,5 +61,10 @@ public class AdminController {
     @DeleteMapping("/deleteshowing/{id}")
     public void deleteShowing (@PathVariable int id) {
         reservationService.deleteShowing(id);
+    }
+
+    @GetMapping("/allreservations")
+    public List<Reservation> getAllReservations() {
+        return reservationService.getAllReservations();
     }
 }
