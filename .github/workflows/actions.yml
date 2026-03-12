@@ -69,14 +69,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           # køre script når actions har SSH'et ind i VM
           script: |
-            # compose.prod.yml befinder sig i ~/ roden, derfor ingen cd
-            # stopper script hvis noget fejler
             set -e
             
-            export SPRING_DATASOURCE_URL=${{ secrets.PROD_DATABASE_URL }}
-            export SPRING_DATASOURCE_USERNAME=${{ secrets.PROD_USERNAME }}
-            export SPRING_DATASOURCE_PASSWORD=${{ secrets.PROD_PASSWORD }}
-
+            export PROD_DATABASE_URL='${{ secrets.PROD_DATABASE_URL }}'
+            export PROD_USERNAME='${{ secrets.PROD_USERNAME }}'
+            export PROD_PASSWORD='${{ secrets.PROD_PASSWORD }}'
+            
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
             docker image prune -f
