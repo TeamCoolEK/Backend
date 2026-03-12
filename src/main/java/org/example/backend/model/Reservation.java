@@ -23,7 +23,6 @@ public class Reservation {
     private int price;
 
     @OneToMany(mappedBy = "reservation")
-    @JsonBackReference
     private List<SeatReservation> seatReservations;
 
     @ManyToOne

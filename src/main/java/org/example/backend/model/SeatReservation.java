@@ -1,5 +1,6 @@
 package org.example.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -20,5 +21,8 @@ public class SeatReservation {
 
     @ManyToOne
     @JoinColumn(name = "reservationdid", referencedColumnName = "id")
+    @JsonIgnore
     private Reservation reservation;
-}
+}   /*JsonIgnore for at få antallet af sæder med i visning af reservationer i admin siden,
+    og for at undgå uendelig løkke.
+*/
