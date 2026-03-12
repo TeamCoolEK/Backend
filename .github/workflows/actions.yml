@@ -61,11 +61,6 @@ jobs:
     if: github.ref == 'refs/heads/Dev' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
-    env:
-      PROD_DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
-      PROD_USERNAME: ${{ secrets.PROD_USERNAME }}
-      PROD_PASSWORD: ${{ secrets.PROD_PASSWORD }}
-
     steps:
       - name: Deploy to Oracle VM #Deployer til oracle VM
         uses: appleboy/ssh-action@v1.0.0 #Bruges til at SSH ind i vores VM
@@ -76,6 +71,10 @@ jobs:
           # køre script når actions har SSH'et ind i VM
           script: |
             set -e
+            
+            export PROD_DATABASE_URL="${{ secrets.PROD_DATABASE_URL }}"
+            export PROD_USERNAME="${{ secrets.PROD_USERNAME }}"
+            export PROD_PASSWORD="${{ secrets.PROD_PASSWORD }}"
             
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
