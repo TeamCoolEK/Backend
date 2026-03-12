@@ -26,6 +26,9 @@ public class Movie {
 
     private boolean underperforming;
 
+    @Lob
+    @Column(columnDefinition = "LONGTEXT") // Gemmer billedet som en lang tekststreng i Base64 format
+    private String imageData;
 
     @OneToMany(mappedBy = "movie")
     @JsonIgnore
