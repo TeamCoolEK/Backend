@@ -5,4 +5,6 @@ spring:
     active: prod
   jpa:
     hibernate:
+
       ddl-auto: create-drop
+
