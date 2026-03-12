@@ -161,4 +161,8 @@ public class ReservationService {
     public Showing findShowingById(int showingId) {
         return showingRepository.findById(showingId).orElse(null);
     }
+
+    public List<Reservation> getAllReservations() {
+        return reservationRepository.findAll();
+    }
 }
