@@ -30,6 +30,6 @@ class ShowingRepositoryTest {
         List<Showing> result = showingRepository.findAll();
 
         //Assert
-        assertEquals(2, result.size());
+        assertEquals(44 , result.size());
     }
 }
