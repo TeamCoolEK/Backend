@@ -9,7 +9,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -28,12 +30,14 @@ public class BackendApplication {
     }
 
     //Omdanner jpg til base64 string til dummy data
-    public String imageToBase64(String path) {
+    public String imageToBase64(String fileName) {
         try {
-            byte[] fileContent = Files.readAllBytes(Path.of(path));
-            return Base64.getEncoder().encodeToString(fileContent);
+            ClassPathResource resource = new ClassPathResource("images/" + fileName);
+            InputStream inputStream = resource.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+            return Base64.getEncoder().encodeToString(bytes);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load image: " + path);
+            throw new RuntimeException("Failed to load image: " + fileName);
         }
     }
 
@@ -168,7 +172,7 @@ public class BackendApplication {
             interstellar.setDuration(169);
             interstellar.setUnderperforming(false);
             interstellar.setCategory(categoryRepository.findById(1).get());
-            interstellar.setImageData(imageToBase64("src/main/resources/images/interstellar.jpg"));
+            interstellar.setImageData(imageToBase64("interstellar.jpg"));
 
             Movie dune = new Movie();
             dune.setTitle("Dune: Part Two");
@@ -177,7 +181,7 @@ public class BackendApplication {
             dune.setDuration(166);
             dune.setUnderperforming(false);
             dune.setCategory(categoryRepository.findById(1).get());
-            dune.setImageData(imageToBase64("src/main/resources/images/dune.jpg"));
+            dune.setImageData(imageToBase64("dune.jpg"));
 
             Movie johnWick = new Movie();
             johnWick.setTitle("John Wick 4");
@@ -186,7 +190,7 @@ public class BackendApplication {
             johnWick.setDuration(169);
             johnWick.setUnderperforming(false);
             johnWick.setCategory(categoryRepository.findById(2).get());
-            johnWick.setImageData(imageToBase64("src/main/resources/images/johnWick.jpg"));
+            johnWick.setImageData(imageToBase64("johnWick.jpg"));
 
             Movie oppenheimer = new Movie();
             oppenheimer.setTitle("Oppenheimer");
@@ -195,7 +199,7 @@ public class BackendApplication {
             oppenheimer.setDuration(180);
             oppenheimer.setUnderperforming(false);
             oppenheimer.setCategory(categoryRepository.findById(3).get());
-            oppenheimer.setImageData(imageToBase64("src/main/resources/images/oppenheimer.jpg"));
+            oppenheimer.setImageData(imageToBase64("oppenheimer.jpg"));
 
             Movie mario = new Movie();
             mario.setTitle("Super Mario Bros");
@@ -204,7 +208,7 @@ public class BackendApplication {
             mario.setDuration(92);
             mario.setUnderperforming(false);
             mario.setCategory(categoryRepository.findById(6).get());
-            mario.setImageData(imageToBase64("src/main/resources/images/mario.jpg"));
+            mario.setImageData(imageToBase64("mario.jpg"));
 
             movies.add(interstellar);
             movies.add(dune);
