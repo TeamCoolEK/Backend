@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-
 public class ReservationController {
 
     private final ReservationService reservationService;
