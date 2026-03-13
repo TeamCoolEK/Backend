@@ -35,9 +35,19 @@ public class BackendApplication {
             ClassPathResource resource = new ClassPathResource("images/" + fileName);
             InputStream inputStream = resource.getInputStream();
             byte[] bytes = inputStream.readAllBytes();
-            return Base64.getEncoder().encodeToString(bytes);
+
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+
+            String mimeType = "image/jpeg";
+            if (fileName.endsWith(".png")) {
+                mimeType = "image/png";
+            } else if (fileName.endsWith(".webp")) {
+                mimeType = "image/webp";
+            }
+
+            return "data:" + mimeType + ";base64," + base64;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to load image: " + fileName);
+            throw new RuntimeException("Failed to load image: " + fileName, e);
         }
     }
 
