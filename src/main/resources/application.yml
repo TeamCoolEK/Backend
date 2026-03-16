@@ -7,4 +7,3 @@ spring:
     hibernate:
 
       ddl-auto: create-drop
-
