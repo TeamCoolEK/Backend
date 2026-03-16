@@ -116,5 +116,9 @@ public class AdminService {
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
+
+    public void deleteReservation (int id) {
+        reservationRepository.deleteById(id);
+    }
 }
 

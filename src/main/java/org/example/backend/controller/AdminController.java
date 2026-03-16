@@ -75,5 +75,8 @@ public class AdminController {
         return adminService.getAllReservations();
     }
 
-
+    @DeleteMapping("/deletereservation/{id}")
+    public void deleteReservation (@PathVariable int id) {
+        adminService.deleteReservation(id);
+    }
 }
