@@ -60,6 +60,7 @@ jobs:
     needs: build-and-push-backend
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
+
     steps:
       - name: Deploy to Oracle VM #Deployer til oracle VM
         uses: appleboy/ssh-action@v1.0.0 #Bruges til at SSH ind i vores VM
@@ -69,12 +70,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           # køre script når actions har SSH'et ind i VM
           script: |
-            # compose.prod.yml befinder sig i ~/ roden, derfor ingen cd
-            # stopper script hvis noget fejler
             set -e
             
+            export PROD_DATABASE_URL="${{ secrets.PROD_DATABASE_URL }}"
+            export PROD_USERNAME="${{ secrets.PROD_USERNAME }}"
+            export PROD_PASSWORD="${{ secrets.PROD_PASSWORD }}"
+            
             docker compose -f docker-compose.prod.yml pull
-            
             docker compose -f docker-compose.prod.yml up -d
-            
             docker image prune -f

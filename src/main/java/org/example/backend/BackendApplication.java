@@ -1,5 +1,6 @@
 package org.example.backend;
 
+
 import org.example.backend.model.*;
 import org.example.backend.repository.*;
 import org.slf4j.Logger;
@@ -8,12 +9,16 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 
+import java.io.InputStream;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @SpringBootApplication
 public class BackendApplication {
@@ -22,6 +27,28 @@ public class BackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BackendApplication.class, args);
+    }
+
+    //Omdanner jpg til base64 string til dummy data
+    public String imageToBase64(String fileName) {
+        try {
+            ClassPathResource resource = new ClassPathResource("images/" + fileName);
+            InputStream inputStream = resource.getInputStream();
+            byte[] bytes = inputStream.readAllBytes();
+
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+
+            String mimeType = "image/jpeg";
+            if (fileName.endsWith(".png")) {
+                mimeType = "image/png";
+            } else if (fileName.endsWith(".webp")) {
+                mimeType = "image/webp";
+            }
+
+            return "data:" + mimeType + ";base64," + base64;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load image: " + fileName, e);
+        }
     }
 
     @Bean
@@ -129,81 +156,258 @@ public class BackendApplication {
                 categoryRepository.save(horror);
             }
 
-            // =======================
-            // MOVIE
-            // =======================
-            Movie movie = new Movie();
-            movie.setTitle("Interstellar");
-            movie.setAgeLimit(11);
-            movie.setIsActive(true);
-            movie.setDuration(169);
-            movie.setUnderperforming(false);
-            movie.setCategory(categoryRepository.findById(1).get());
-
-            movieRepository.save(movie);
-
-
-            // =======================
-            // SHOWING
-            // =======================
-
-            Showing showing = new Showing();
-
-            showing.setStartTime(LocalDateTime.of(2026,3,6,18,0));
-            showing.setEndTime(LocalDateTime.of(2026, 3, 6,  20,49));
-
-            showing.setStatus(0);
-            showing.setMovie(movie);
-
-            // henter theatre 1 fra databasen
-            Theatre theatre = theatreRepository.findById(1).get();
-            showing.setTheatre(theatre);
-
-            showingRepository.save(showing);
-
+//            // =======================
+//            // MOVIE
+//            // =======================
+//            Movie movie = new Movie();
+//            movie.setTitle("Interstellar");
+//            movie.setAgeLimit(11);
+//            movie.setIsActive(true);
+//            movie.setDuration(169);
+//            movie.setUnderperforming(false);
+//            movie.setCategory(categoryRepository.findById(1).get());
+//
+//            movieRepository.save(movie);
 
             // =======================
-            // CUSTOMER
+            // MOVIES
             // =======================
 
-            Customer customer = new Customer();
-            customer.setName("Sebastian");
-            customer.setAge((byte) 25);
-            customer.setPhoneNr("42450177");
+            List<Movie> movies = new ArrayList<>();
 
-            costumerRepository.save(customer);
+            Movie interstellar = new Movie();
+            interstellar.setTitle("Interstellar");
+            interstellar.setAgeLimit(11);
+            interstellar.setIsActive(true);
+            interstellar.setDuration(169);
+            interstellar.setUnderperforming(false);
+            interstellar.setCategory(categoryRepository.findById(1).get());
+            interstellar.setImageData(imageToBase64("interstellar.jpg"));
+
+            Movie dune = new Movie();
+            dune.setTitle("Dune: Part Two");
+            dune.setAgeLimit(11);
+            dune.setIsActive(true);
+            dune.setDuration(166);
+            dune.setUnderperforming(false);
+            dune.setCategory(categoryRepository.findById(1).get());
+            dune.setImageData(imageToBase64("dune.jpg"));
+
+            Movie johnWick = new Movie();
+            johnWick.setTitle("John Wick 4");
+            johnWick.setAgeLimit(15);
+            johnWick.setIsActive(true);
+            johnWick.setDuration(169);
+            johnWick.setUnderperforming(false);
+            johnWick.setCategory(categoryRepository.findById(2).get());
+            johnWick.setImageData(imageToBase64("johnWick.jpg"));
+
+            Movie oppenheimer = new Movie();
+            oppenheimer.setTitle("Oppenheimer");
+            oppenheimer.setAgeLimit(15);
+            oppenheimer.setIsActive(true);
+            oppenheimer.setDuration(180);
+            oppenheimer.setUnderperforming(false);
+            oppenheimer.setCategory(categoryRepository.findById(3).get());
+            oppenheimer.setImageData(imageToBase64("oppenheimer.jpg"));
+
+            Movie mario = new Movie();
+            mario.setTitle("Super Mario Bros");
+            mario.setAgeLimit(7);
+            mario.setIsActive(true);
+            mario.setDuration(92);
+            mario.setUnderperforming(false);
+            mario.setCategory(categoryRepository.findById(6).get());
+            mario.setImageData(imageToBase64("mario.jpg"));
+
+            movies.add(interstellar);
+            movies.add(dune);
+            movies.add(johnWick);
+            movies.add(oppenheimer);
+            movies.add(mario);
+
+            movieRepository.saveAll(movies);
+
+
+//            // =======================
+//            // SHOWING
+//            // =======================
+//
+//            Showing showing = new Showing();
+//
+//            showing.setStartTime(LocalDateTime.of(2026,3,6,18,0));
+//            showing.setEndTime(LocalDateTime.of(2026, 3, 6,  20,49));
+//
+//            showing.setStatus(0);
+//            showing.setMovie(movie);
+//
+//            // henter theatre 1 fra databasen
+//            Theatre theatre = theatreRepository.findById(1).get();
+//            showing.setTheatre(theatre);
+//
+//            showingRepository.save(showing);
+
+               // =======================
+              // SHOWINGS
+             // =======================
+
+            List<Showing> showings = new ArrayList<>();
+
+            Theatre theatre1Db = theatreRepository.findById(1).get();
+            Theatre theatre2Db = theatreRepository.findById(2).get();
+
+            LocalDate startDate = LocalDate.of(2026, 3, 13);
+
+            for (int day = 0; day < 14; day++) {
+
+                LocalDate date = startDate.plusDays(day);
+
+                // 15:00 showing
+                Showing showing1 = new Showing();
+                showing1.setStartTime(LocalDateTime.of(date, LocalTime.of(15,0)));
+                showing1.setEndTime(LocalDateTime.of(date, LocalTime.of(17,30)));
+                showing1.setStatus(0);
+                showing1.setMovie(movies.get(day % movies.size()));
+                showing1.setTheatre(theatre1Db);
+                showings.add(showing1);
+
+                // 18:00 showing
+                Showing showing2 = new Showing();
+                showing2.setStartTime(LocalDateTime.of(date, LocalTime.of(18,0)));
+                showing2.setEndTime(LocalDateTime.of(date, LocalTime.of(20,45)));
+                showing2.setStatus(0);
+                showing2.setMovie(movies.get((day+1) % movies.size()));
+                showing2.setTheatre(theatre2Db);
+                showings.add(showing2);
+
+                // 21:00 showing
+                Showing showing3 = new Showing();
+                showing3.setStartTime(LocalDateTime.of(date, LocalTime.of(21,0)));
+                showing3.setEndTime(LocalDateTime.of(date, LocalTime.of(23,50)));
+                showing3.setStatus(0);
+                showing3.setMovie(movies.get((day+2) % movies.size()));
+                showing3.setTheatre(theatre1Db);
+                showings.add(showing3);
+            }
+
+            showingRepository.saveAll(showings);
+
+//            // =======================
+//            // CUSTOMER
+//            // =======================
+//
+//            Customer customer = new Customer();
+//            customer.setName("Sebastian");
+//            customer.setAge((byte) 25);
+//            customer.setPhoneNr("42450177");
+//
+//            costumerRepository.save(customer);
+//
+//
+//            // =======================
+//            // RESERVATION
+//            // =======================
+//
+//            Reservation reservation = new Reservation();
+//
+//            reservation.setCreatedAt(LocalDateTime.of(2026,3,6,17,30));
+//            reservation.setExpiresAt(LocalDateTime.of(2026,3,6,17,50));
+//
+//            reservation.setPrice(120);
+//
+//            reservation.setCustomer(customer);
+//            reservation.setShowing(showings.get(1));
+//
+//            reservationRepository.save(reservation);
+//
+//
+//            // =======================
+//            // SEAT RESERVATION
+//            // =======================
+//
+//            // henter seat 1 fra databasen
+//            Seat seat1 = seatRepositoy.findById(1).get();
+//
+//            SeatReservation seatReservation = new SeatReservation();
+//
+//            seatReservation.setSeat(seat1);
+//            seatReservation.setReservation(reservation);
+//
+//            seatReservationRepository.save(seatReservation);
+
+            Random random = new Random();
+
+            // hent data fra DB
+            List<Seat> seatsDb = seatRepositoy.findAll();
 
 
             // =======================
-            // RESERVATION
+            // CUSTOMERS (50)
             // =======================
 
-            Reservation reservation = new Reservation();
+            List<Customer> customers = new ArrayList<>();
 
-            reservation.setCreatedAt(LocalDateTime.of(2026,3,6,17,30));
-            reservation.setExpiresAt(LocalDateTime.of(2026,3,6,17,50));
+            for (int i = 1; i <= 50; i++) {
 
-            reservation.setPrice(120);
+                Customer c = new Customer();
+                c.setName("Customer " + i);
+                c.setAge((byte) (18 + random.nextInt(50)));
+                c.setPhoneNr("40" + (100000 + random.nextInt(899999)));
 
-            reservation.setCustomer(customer);
-            reservation.setShowing(showing);
+                customers.add(c);
+            }
 
-            reservationRepository.save(reservation);
+            costumerRepository.saveAll(customers);
 
 
             // =======================
-            // SEAT RESERVATION
+            // RESERVATIONS (300)
             // =======================
 
-            // henter seat 1 fra databasen
-            Seat seat1 = seatRepositoy.findById(1).get();
+            List<Reservation> reservations = new ArrayList<>();
 
-            SeatReservation seatReservation = new SeatReservation();
+            for (int i = 0; i < 300; i++) {
 
-            seatReservation.setSeat(seat1);
-            seatReservation.setReservation(reservation);
+                Customer randomCustomer = customers.get(random.nextInt(customers.size()));
+                Showing randomShowing = showings.get(random.nextInt(showings.size()));
 
-            seatReservationRepository.save(seatReservation);
+                Reservation r = new Reservation();
+
+                LocalDateTime created = randomShowing.getStartTime().minusHours(2);
+
+                r.setCreatedAt(created);
+                r.setExpiresAt(created.plusMinutes(20));
+                r.setPrice(120);
+
+                r.setCustomer(randomCustomer);
+                r.setShowing(randomShowing);
+
+                reservations.add(r);
+            }
+
+            reservationRepository.saveAll(reservations);
+
+
+            // =======================
+            // SEAT RESERVATIONS (1000)
+            // =======================
+
+            List<SeatReservation> seatReservations = new ArrayList<>();
+
+            for (int i = 0; i < 1000; i++) {
+
+                Seat randomSeat = seatsDb.get(random.nextInt(seatsDb.size()));
+                Reservation randomReservation = reservations.get(random.nextInt(reservations.size()));
+
+                SeatReservation sr = new SeatReservation();
+
+                sr.setSeat(randomSeat);
+                sr.setReservation(randomReservation);
+
+                seatReservations.add(sr);
+            }
+
+            seatReservationRepository.saveAll(seatReservations);
         };
     }
 }

@@ -35,10 +35,6 @@ public class ReservationService {
         return SeatReservationRepository.findReservedSeatIdsByShowingId(showingId).size();
     }
 
-    public List<Showing> findAllShowings() {
-        return showingRepository.findAll();
-    }
-
     public List<Seat> findSeatsByTheatre(int theatreId){
         return SeatRepositoy.findByTheatre_Id(theatreId);
     }
@@ -68,46 +64,18 @@ public class ReservationService {
         }
         return availableSeats;
     }
-
-    public Showing addShowing (Showing showing) {
-        List<Showing> showings = showingRepository.findAll();
-        for (Showing s : showings) {
-            if (s.getId() == showing.getId()) {
-                throw new RuntimeException("Showing already exist!");
-            }
-        }
-        if (showing.getEndTime().toLocalTime().isAfter(LocalTime.of(23,59))) {
-            throw new IllegalArgumentException("Showing cannot end after 23:59");
-        }
-        return showingRepository.save(showing);
-    }
-
-    public void deleteShowing (int id) {
-        showingRepository.deleteById(id);
-    }
-
-    public boolean hasOverlap(Showing showing) {
-        List<Showing> showings = showingRepository.findAll();
-
-        //Hvis showing starttid og slutid ikke er indenfor en showing i listen, retuneres true, ellers false
-        for (Showing s : showings) {
-
-            if (s.getTheatre().getId() == showing.getTheatre().getId()) {
-
-                if (showing.getStartTime().isBefore(s.getEndTime()) && showing.getEndTime().isAfter(s.getStartTime())) {
-                    return true;
-                }
-
-            }
-        }
-        return false;
-    }
-
+    //Henter liste af showings pr dato og sotere dem efter tid
     public List<Showing> getShowsByDate (LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
 
-        return showingRepository.findByStartTimeBetween(startOfDay, endOfDay);
+        List<Showing> showings =
+                showingRepository.findByStartTimeBetween(startOfDay, endOfDay);
+
+        showings.sort((a, b) -> a.getStartTime().compareTo(b.getStartTime()));
+
+        return showings;
+
     }
 
     public String createReservation(int showingId, String phoneNr, List<Integer> seatIds){
@@ -161,4 +129,5 @@ public class ReservationService {
     public Showing findShowingById(int showingId) {
         return showingRepository.findById(showingId).orElse(null);
     }
+
 }

@@ -2,7 +2,8 @@ spring:
   application:
     name: teamcoolkino
   profiles:
-    active: dev
+    active: prod
   jpa:
     hibernate:
+
       ddl-auto: create-drop

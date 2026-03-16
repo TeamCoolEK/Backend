@@ -1,10 +1,10 @@
 package org.example.backend.controller;
 
 import org.example.backend.model.Movie;
+import org.example.backend.model.Reservation;
 import org.example.backend.model.Showing;
-import org.example.backend.service.MovieService;
+import org.example.backend.service.AdminService;
 import org.example.backend.service.ReservationService;
-import org.example.backend.service.TheatreService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,48 +17,66 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class AdminController {
 
-    private final TheatreService theatreService;
-    private final MovieService movieService;
+    private final AdminService adminService;
     private final ReservationService reservationService;
 
-    public AdminController(TheatreService theatreService, ReservationService reservationService, MovieService movieService) {
-        this.theatreService = theatreService;
-        this.movieService = movieService;
+    public AdminController(ReservationService reservationService, AdminService adminService) {
+        this.adminService = adminService;
         this.reservationService = reservationService;
-    }
-
-    @GetMapping("/showallshowings")
-    public ResponseEntity<List<Showing>> getAllShowings () {
-        List<Showing> showings = reservationService.findAllShowings();
-        return ResponseEntity.ok(showings);
     }
 
     @GetMapping("/movies")
     public ResponseEntity<List<Movie>> getAllMoviesForAdmin() {
-        movieService.updateUnderperformingStatus();
-        return ResponseEntity.ok(movieService.getAllMovies());
+        adminService.updateUnderperformingStatus();
+        return ResponseEntity.ok(adminService.getAllMovies());
+    }
+
+    @DeleteMapping("/deletemovie/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
+        adminService.deleteMovie(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/allmovies")
+    public List<Movie> getAllMovies() {
+        return adminService.getAllMovies();
+    }
+
+    @PostMapping("/createmovie")
+    public Movie createMovie(@RequestBody Movie movie) {
+        return adminService.createMovie(movie);
+    }
+
+    @GetMapping("/showallshowings")
+    public ResponseEntity<List<Showing>> getAllShowings () {
+        List<Showing> showings = adminService.findAllShowings();
+        return ResponseEntity.ok(showings);
     }
 
     @PostMapping("/addshowing")
     public ResponseEntity<Showing> addShowing (@RequestBody Showing showing) {
-        boolean overlap = reservationService.hasOverlap(showing);
+        boolean overlap = adminService.hasOverlap(showing);
 
         if (overlap) {
             throw new RuntimeException("Fejl");
         }
 
-        Showing savedShowing = reservationService.addShowing(showing);
+        Showing savedShowing = adminService.addShowing(showing);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedShowing);
-    }
-
-    @DeleteMapping("/movie/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
-        movieService.deleteMovie(id);
-        return ResponseEntity.noContent().build();
     }
   
     @DeleteMapping("/deleteshowing/{id}")
     public void deleteShowing (@PathVariable int id) {
-        reservationService.deleteShowing(id);
+        adminService.deleteShowing(id);
+    }
+
+    @GetMapping("/allreservations")
+    public List<Reservation> getAllReservations() {
+        return adminService.getAllReservations();
+    }
+
+    @DeleteMapping("/deletereservation/{id}")
+    public void deleteReservation (@PathVariable int id) {
+        adminService.deleteReservation(id);
     }
 }
